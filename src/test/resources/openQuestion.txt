@@ -1,0 +1,3 @@
+type:openQuestion
+Это тестовый открытый вопрос
+int
