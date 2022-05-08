@@ -32,14 +32,14 @@ class QuizEngineTest {
     }
 
     @Test
-    void correctlyPrintsIntroduction() throws IOException, URISyntaxException {
+    void correctlyPrintsIntroduction() throws Exception {
         quizEngine.run();
 
         verify(terminalMock, times(1)).printIntroduction();
     }
 
     @Test
-    void correctlyCallsAnswerChecker() throws IOException, URISyntaxException {
+    void correctlyCallsAnswerChecker() throws Exception {
         Question question1 = new Question(QuestionType.OPEN_QUESTION, "вопрос 1", "int", null);
         Question question2 = new Question(QuestionType.QUESTION_WITH_ANSWERS, "вопрос 2", "2", List.of("ответ 1", "ответ 2"));
         when(dataParserMock.parseQuestions(any())).thenReturn(List.of(question1, question2));
@@ -51,7 +51,7 @@ class QuizEngineTest {
     }
 
     @Test
-    void printsRetryUntilCorrectAnswerIsGiven() throws IOException, URISyntaxException {
+    void printsRetryUntilCorrectAnswerIsGiven() throws Exception {
         Question question1 = new Question(QuestionType.OPEN_QUESTION, "вопрос 1", "int", null);
         when(dataParserMock.parseQuestions(any())).thenReturn(List.of(question1));
         when(answerCheckerMock.isUserAnswerCorrect(any(), any())).thenReturn(false, true);
@@ -63,7 +63,7 @@ class QuizEngineTest {
     }
 
     @Test
-    void congratulatesUserWithCorrectAnswerAfterEachCorrectAnswer() throws IOException, URISyntaxException {
+    void congratulatesUserWithCorrectAnswerAfterEachCorrectAnswer() throws Exception {
         Question question1 = new Question(QuestionType.OPEN_QUESTION, "вопрос 1", "int", null);
         Question question2 = new Question(QuestionType.QUESTION_WITH_ANSWERS, "вопрос 2", "2", List.of("ответ 1", "ответ 2"));
         when(dataParserMock.parseQuestions(any())).thenReturn(List.of(question1, question2));
@@ -73,7 +73,7 @@ class QuizEngineTest {
     }
 
     @Test
-    void congratulatesUserWithQuizFinish() throws IOException, URISyntaxException {
+    void congratulatesUserWithQuizFinish() throws Exception {
         Question question1 = new Question(QuestionType.OPEN_QUESTION, "вопрос 1", "int", null);
         when(dataParserMock.parseQuestions(any())).thenReturn(List.of(question1));
 
@@ -82,7 +82,7 @@ class QuizEngineTest {
     }
 
     @Test
-    void callsPrintQuestionForEachQuestion() throws IOException, URISyntaxException {
+    void callsPrintQuestionForEachQuestion() throws Exception {
         Question question1 = new Question(QuestionType.OPEN_QUESTION, "вопрос 1", "int", null);
         Question question2 = new Question(QuestionType.QUESTION_WITH_ANSWERS, "вопрос 2", "2", List.of("ответ 1", "ответ 2"));
         when(dataParserMock.parseQuestions(any())).thenReturn(List.of(question1, question2));
@@ -94,7 +94,7 @@ class QuizEngineTest {
     }
 
     @Test
-    void correctlyExitsWhenUserInputsQ() throws IOException, URISyntaxException {
+    void correctlyExitsWhenUserInputsQ() throws Exception {
         Question question1 = new Question(QuestionType.OPEN_QUESTION, "вопрос 1", "int", null);
         Question question2 = new Question(QuestionType.QUESTION_WITH_ANSWERS, "вопрос 2", "2", List.of("ответ 1", "ответ 2"));
         Question question3 = new Question(QuestionType.QUESTION_WITH_ANSWERS, "вопрос 3", "1", List.of("ответ 1", "ответ 2"));

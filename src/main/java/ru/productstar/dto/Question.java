@@ -55,11 +55,17 @@ public class Question {
 
     @Override
     public String toString() {
-        return "Question{" +
-                "questionType=" + questionType +
-                ", text='" + text + '\'' +
-                ", correctAnswer='" + correctAnswer + '\'' +
-                ", answerOptions=" + answerOptions +
-                '}';
+        if (this.questionType.equals(QuestionType.QUESTION_WITH_ANSWERS)) {
+            return
+                    this.text +
+                    "\n" +
+                    this.answerOptions.toString();
+        }
+        if (this.questionType.equals(QuestionType.OPEN_QUESTION)) {
+            return
+                    this.text;
+        } else {
+            return null;
+        }
     }
 }

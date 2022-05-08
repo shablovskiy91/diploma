@@ -16,12 +16,12 @@ class DataParserTest {
     private final DataParser dataParser = new DataParser();
 
     @Test
-    public void correctlyParsesEmptyData() {
+    public void correctlyParsesEmptyData() throws Exception {
         assertThat(dataParser.parseQuestions(emptyList())).isEmpty();
     }
 
     @Test
-    public void correctlyParsesQuestionWithAnswer() throws IOException, URISyntaxException {
+    public void correctlyParsesQuestionWithAnswer() throws Exception {
         FileReader fileReader = new FileReader("questionWithAnswers.txt");
         List<Question> questions = dataParser.parseQuestions(fileReader.readFile());
 
@@ -38,7 +38,7 @@ class DataParserTest {
     }
 
     @Test
-    public void correctlyParsesOpenQuestion() throws IOException, URISyntaxException {
+    public void correctlyParsesOpenQuestion() throws Exception {
         FileReader fileReader = new FileReader("openQuestion.txt");
         List<Question> questions = dataParser.parseQuestions(fileReader.readFile());
 
