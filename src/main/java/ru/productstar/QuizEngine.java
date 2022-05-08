@@ -16,6 +16,7 @@ public class QuizEngine {
     private final Terminal terminal;
 
     private List<Question> questions;
+    private Question currentQuestion;
 
     public QuizEngine(FileReader fileReader, DataParser dataParser, AnswerChecker answerChecker, Terminal terminal) {
         this.fileReader = fileReader;
@@ -26,28 +27,51 @@ public class QuizEngine {
 
     public void run() throws Exception {
         questions = loadQuestions();
+
+        terminal.printIntroduction();
         startQuiz();
     }
 
     void startQuiz() {
+
         var questionsIterator = questions.iterator();
-        terminal.printIntroduction();
-        var currentQuestion = questionsIterator.next();
+
+        if (questionsIterator.hasNext()) {
+           currentQuestion = questionsIterator.next();
+        }
+
         while (questionsIterator.hasNext()) {
             terminal.printQuestion(currentQuestion);
             String input = terminal.readLine();
             if (QUIT_INPUT.equalsIgnoreCase(input)) {
                 return;
             }
-            var correctFlag = answerChecker.isUserAnswerCorrect(input, currentQuestion);
-            if (correctFlag) {
+            if (answerChecker.isUserAnswerCorrect(input, currentQuestion)) {
                 terminal.congratulateUserWithCorrectAnswer();
-                currentQuestion = questionsIterator.next();
             } else {
                 terminal.printRetry();
             }
+            currentQuestion = questionsIterator.next();
         }
         terminal.congratulateUserWithQuizFinish();
+
+
+        /*for (Question question : questions) {
+            terminal.printQuestion(question);
+            String userAnswer = terminal.readLine();
+
+            if (userAnswer.equalsIgnoreCase(QUIT_INPUT)) {
+                return;
+            }
+
+            while (!answerChecker.isUserAnswerCorrect(userAnswer, question)) {
+                terminal.printRetry();
+                userAnswer = terminal.readLine();
+            }
+
+            terminal.congratulateUserWithCorrectAnswer();
+        }
+        terminal.congratulateUserWithQuizFinish();*/
     }
 
     List<Question> loadQuestions() throws Exception {
