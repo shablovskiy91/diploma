@@ -34,13 +34,7 @@ public class QuizEngine {
 
     void startQuiz() {
 
-        var questionsIterator = questions.iterator();
-
-        if (questionsIterator.hasNext()) {
-           currentQuestion = questionsIterator.next();
-        }
-
-        while (questionsIterator.hasNext()) {
+        for (Question question : questions) {
             terminal.printQuestion(currentQuestion);
             String input = terminal.readLine();
             if (QUIT_INPUT.equalsIgnoreCase(input)) {
@@ -51,27 +45,8 @@ public class QuizEngine {
             } else {
                 terminal.printRetry();
             }
-            currentQuestion = questionsIterator.next();
         }
         terminal.congratulateUserWithQuizFinish();
-
-
-        /*for (Question question : questions) {
-            terminal.printQuestion(question);
-            String userAnswer = terminal.readLine();
-
-            if (userAnswer.equalsIgnoreCase(QUIT_INPUT)) {
-                return;
-            }
-
-            while (!answerChecker.isUserAnswerCorrect(userAnswer, question)) {
-                terminal.printRetry();
-                userAnswer = terminal.readLine();
-            }
-
-            terminal.congratulateUserWithCorrectAnswer();
-        }
-        terminal.congratulateUserWithQuizFinish();*/
     }
 
     List<Question> loadQuestions() throws Exception {
