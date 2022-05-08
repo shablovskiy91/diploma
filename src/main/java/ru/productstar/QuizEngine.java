@@ -1,5 +1,6 @@
 package ru.productstar;
 
+import com.sun.source.tree.IfTree;
 import ru.productstar.dto.Question;
 
 import java.io.IOException;
@@ -35,6 +36,9 @@ public class QuizEngine {
         while (questionsIterator.hasNext()) {
             terminal.printQuestion(currentQuestion);
             String input = terminal.readLine();
+            if (QUIT_INPUT.equalsIgnoreCase(input)) {
+                return;
+            }
             var correctFlag = answerChecker.isUserAnswerCorrect(input, currentQuestion);
             if (correctFlag) {
                 terminal.congratulateUserWithCorrectAnswer();
