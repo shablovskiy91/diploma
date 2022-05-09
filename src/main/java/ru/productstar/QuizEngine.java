@@ -36,15 +36,20 @@ public class QuizEngine {
         for (Question question : questions) {
             terminal.printQuestion(question);
             String input = terminal.readLine();
+
             if (QUIT_INPUT.equalsIgnoreCase(input)) {
                 return;
             }
+
             while (!answerChecker.isUserAnswerCorrect(input, question)) {
                 terminal.printRetry();
                 input = terminal.readLine();
             }
+
             terminal.congratulateUserWithCorrectAnswer();
+
         }
+
         terminal.congratulateUserWithQuizFinish();
     }
 
