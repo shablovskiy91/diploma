@@ -28,6 +28,7 @@ public class QuizEngine {
         questions = loadQuestions();
 
         terminal.printIntroduction();
+
         startQuiz();
     }
 
