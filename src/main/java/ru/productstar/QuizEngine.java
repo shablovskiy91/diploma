@@ -16,7 +16,6 @@ public class QuizEngine {
     private final Terminal terminal;
 
     private List<Question> questions;
-    private Question currentQuestion;
 
     public QuizEngine(FileReader fileReader, DataParser dataParser, AnswerChecker answerChecker, Terminal terminal) {
         this.fileReader = fileReader;
@@ -35,16 +34,16 @@ public class QuizEngine {
     void startQuiz() {
 
         for (Question question : questions) {
-            terminal.printQuestion(currentQuestion);
+            terminal.printQuestion(question);
             String input = terminal.readLine();
             if (QUIT_INPUT.equalsIgnoreCase(input)) {
                 return;
             }
-            if (answerChecker.isUserAnswerCorrect(input, currentQuestion)) {
-                terminal.congratulateUserWithCorrectAnswer();
-            } else {
+            while (!answerChecker.isUserAnswerCorrect(input, question)) {
                 terminal.printRetry();
+                input = terminal.readLine();
             }
+            terminal.congratulateUserWithCorrectAnswer();
         }
         terminal.congratulateUserWithQuizFinish();
     }
